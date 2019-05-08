@@ -17,6 +17,12 @@ function isEquivalent(a, b) {
 }
 
 describe("deepCopy", function() {
+    let littleObj = {
+        prop1: {
+            prop2: {},
+        },
+    }
+
     let bigObj = {
         lala: "greef",
         pooDol: 12.4,
@@ -28,9 +34,9 @@ describe("deepCopy", function() {
                 lets: 3,
             }
         },
-        lika: {
-            my: "bls",
-        }
+        aaa: {
+            my: littleObj,
+        },
     };
     
     let otherBigObj = newCopyMaker().deepCopy(bigObj);
@@ -39,12 +45,21 @@ describe("deepCopy", function() {
         assert.notEqual(bigObj, otherBigObj);
     })
 
-    it("copies heve not the same nested links", function() {
-        assert.notEqual(bigObj.pika, otherBigObj.pika);
-        assert.notEqual(bigObj.pika.who, otherBigObj.pika.who);
-        assert.notEqual(bigObj.lika, otherBigObj.lika);
-    })
-     
+    describe("copies heve not the same nested links", function() {
+        it("simple tree object", function() {
+            assert.notEqual(bigObj.pika, otherBigObj.pika);
+            assert.notEqual(bigObj.pika.who, otherBigObj.pika.who);
+            assert.notEqual(bigObj.aaa, otherBigObj.aaa);
+        });
+        
+        it("object with clojures", function() {
+            littleObj.prop1.prop2 = bigObj.aaa
+            assert.notEqual(bigObj.pika, otherBigObj.pika);
+            assert.notEqual(bigObj.pika.who, otherBigObj.pika.who);
+            assert.notEqual(bigObj.aaa, otherBigObj.aaa);
+        });
+    });
+
     it("copies have the same data", function() {
         assert.equal(isEquivalent(bigObj, otherBigObj), true);
     })
