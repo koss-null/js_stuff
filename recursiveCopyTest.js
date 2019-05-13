@@ -39,7 +39,7 @@ describe("deepCopy", function() {
         },
     };
     
-    let otherBigObj = newCopyMaker().deepCopy(bigObj);
+    let otherBigObj = (new CopyMaker()).deepCopy(bigObj);
     
     it("copies have not the same links", function() {
         assert.notEqual(bigObj, otherBigObj);
