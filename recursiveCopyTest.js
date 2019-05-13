@@ -16,6 +16,13 @@ function isEquivalent(a, b) {
     return true;
 }
 
+describe("code quality", function() {
+    it("constructor returns undefined if called witout new", function() {
+        assert.equal(CopyMaker(), undefined);
+        assert.notEqual(new CopyMaker(), undefined);
+    })
+})
+
 describe("deepCopy", function() {
     let littleObj = {
         prop1: {

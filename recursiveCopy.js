@@ -1,11 +1,19 @@
 "use strict"
 
 function CopyInstance(oldObj, newObj) {
-        this.original = oldObj;
-        this.current = newObj;
+    if (!new.target) {
+        return undefined
+    }
+    
+    this.original = oldObj;
+    this.current = newObj;
 }
 
 function CopyMaker() {
+    if (!new.target) {
+        return undefined
+    }
+
     this.instanceJournal = [];
     this.deepCopy = function(obj) {
         for (let index in this.instanceJournal) {
